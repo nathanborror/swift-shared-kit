@@ -1,8 +1,13 @@
 import Foundation
 
 public struct AutoIncrementIndex<Value> {
-    private var dict: [UInt64: Value] = [:]
-    private var currentKey: UInt64 = 0
+    private var dict: [UInt64: Value]
+    private var currentKey: UInt64
+    
+    public init() {
+        self.dict = [:]
+        self.currentKey = 0
+    }
     
     public mutating func add(value: Value) -> UInt64 {
         currentKey += 1
