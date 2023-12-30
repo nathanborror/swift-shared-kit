@@ -3,7 +3,7 @@ import Foundation
 extension String? {
     
     public func apply(with patch: String?) -> String? {
-        guard let patch = patch else { return self }
+        guard let patch else { return self }
         if let existing = self {
             return existing + patch
         } else {
@@ -15,7 +15,7 @@ extension String? {
 extension String {
     
     public func apply(with patch: String?) -> String {
-        guard let patch = patch else { return self }
+        guard let patch else { return self }
         return self + patch
     }
 }

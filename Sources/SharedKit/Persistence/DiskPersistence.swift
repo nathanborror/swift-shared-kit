@@ -68,8 +68,8 @@ public class DiskPersistence: Persistence {
     }
     
     public func deleteAll() throws {
-        guard let dir = documents else { return }
-        let files = try FileManager.default.contentsOfDirectory(at: dir, includingPropertiesForKeys: nil)
+        guard let documents else { return }
+        let files = try FileManager.default.contentsOfDirectory(at: documents, includingPropertiesForKeys: nil)
         for url in files {
             try FileManager.default.removeItem(at: url)
         }
