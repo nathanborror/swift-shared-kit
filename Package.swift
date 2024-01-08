@@ -4,7 +4,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "swift-sharedkit",
+    name: "swift-shared-kit",
     platforms: [
         .iOS(.v16),
         .macOS(.v13),
