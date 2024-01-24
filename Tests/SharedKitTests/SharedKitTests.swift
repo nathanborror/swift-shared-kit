@@ -12,4 +12,14 @@ final class SharedKitTests: XCTestCase {
         let str2 = nilStr.apply(with: "This is my content")
         XCTAssertEqual(str2, "This is my content")
     }
+    
+    func testURLQueryParameterExtension() {
+        var url = URL(string: "https://www.google.com/search?q=swift")!
+        let queryParameters = url.queryParameters
+        XCTAssertEqual(queryParameters["q"], "swift")
+        
+        url.queryParameters["test"] = "foo"
+        XCTAssertEqual(url.queryParameters["test"], "foo")
+        XCTAssertEqual(url.queryParameters["q"], "swift")
+    }
 }
