@@ -1,3 +1,4 @@
+#if os(iOS)
 import UIKit
 
 public class ClosureButton: UIButton {
@@ -12,3 +13,4 @@ public class ClosureButton: UIButton {
         action?()
     }
 }
+#endif
