@@ -1,7 +1,8 @@
 import Foundation
 
-struct BundleVersion {
-
+public struct BundleVersion {
+    public static var shared = BundleVersion()
+    
     public var bundleVersion: String? {
         Bundle.main.infoDictionary?["CFBundleVersion"] as? String
     }
