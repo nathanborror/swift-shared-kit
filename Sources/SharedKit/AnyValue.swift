@@ -7,17 +7,18 @@ public enum AnyValue: Codable {
     
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
-        
         if let v = try? container.decode(Int.self) {
             self = .int(v)
+            return
         }
         if let v = try? container.decode(Double.self) {
             self = .float(v)
+            return
         }
         if let v = try? container.decode(String.self) {
             self = .string(v)
+            return
         }
-        
         throw DecodingError.dataCorruptedError(in: container, debugDescription: "Cannot decode AnyValue")
     }
     
