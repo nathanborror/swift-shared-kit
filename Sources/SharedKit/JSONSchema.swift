@@ -1,7 +1,7 @@
 import Foundation
 
 /// See the [guide](/docs/guides/gpt/function-calling) for examples, and the [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for documentation about the format.
-public struct JSONSchema: Codable, Equatable {
+public struct JSONSchema: Codable, Hashable, Sendable {
     public let type: JSONType
     public let properties: [String: Property]?
     public let required: [String]?
@@ -18,7 +18,7 @@ public struct JSONSchema: Codable, Equatable {
         case multipleOf, minimum, maximum
     }
     
-    public struct Property: Codable, Equatable {
+    public struct Property: Codable, Hashable, Sendable {
         public let type: JSONType
         public let description: String?
         public let format: String?
@@ -59,7 +59,7 @@ public struct JSONSchema: Codable, Equatable {
         }
     }
 
-    public enum JSONType: String, Codable {
+    public enum JSONType: String, Codable, Sendable {
         case integer = "integer"
         case string = "string"
         case boolean = "boolean"
@@ -69,7 +69,7 @@ public struct JSONSchema: Codable, Equatable {
         case `null` = "null"
     }
 
-    public struct Items: Codable, Equatable {
+    public struct Items: Codable, Hashable, Sendable {
         public let type: JSONType
         public let properties: [String: Property]?
         public let pattern: String?
