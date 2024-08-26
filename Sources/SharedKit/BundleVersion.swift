@@ -1,5 +1,6 @@
 import Foundation
 
+@MainActor
 public struct BundleVersion {
     public static var shared = BundleVersion()
     
