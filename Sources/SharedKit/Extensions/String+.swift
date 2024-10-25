@@ -28,9 +28,4 @@ extension String {
         }
         return out
     }
-    
-    /// Returns a unique identifier derived from UUID().
-    public static var id: String {
-        UUID().uuidString
-    }
 }
