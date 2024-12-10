@@ -13,7 +13,7 @@ extension NSImage {
         return bitmapImage.representation(using: .png, properties: [:])
     }
     
-    public func resize(to targetSize: CGSize) -> Data? {
+    public func resize(to targetSize: CGSize, interpolation: NSImageInterpolation = .high) -> Data? {
         let widthRatio = targetSize.width / size.width
         let heightRatio = targetSize.height / size.height
         let scaleFactor = min(widthRatio, heightRatio)
@@ -27,8 +27,8 @@ extension NSImage {
         
         scaledImage.lockFocus()
         
-        NSGraphicsContext.current?.imageInterpolation = .high
-        
+        NSGraphicsContext.current?.imageInterpolation = interpolation
+
         draw(in: CGRect(origin: .zero, size: scaledImageSize),
                    from: CGRect(origin: .zero, size: size),
                    operation: .copy,
