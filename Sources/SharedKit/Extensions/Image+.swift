@@ -82,26 +82,45 @@ extension PlatformImage {
 
     private func resizeMacOS(size: CGSize, drawRect: CGRect, quality: CGInterpolationQuality) -> NSImage? {
         autoreleasepool {
-            let resizedImage = NSImage(size: size)
-            resizedImage.lockFocus()
-            defer { resizedImage.unlockFocus() }
+            let colorSpace = CGColorSpace(name: CGColorSpace.sRGB)!
+            let bitmapInfo = CGImageAlphaInfo.premultipliedLast.rawValue
 
-            NSGraphicsContext.current?.cgContext.interpolationQuality = quality
+            guard let context = CGContext(
+                data: nil,
+                width: Int(size.width),
+                height: Int(size.height),
+                bitsPerComponent: 8,
+                bytesPerRow: 0,
+                space: colorSpace,
+                bitmapInfo: bitmapInfo
+            ) else { return nil }
+
+            context.interpolationQuality = quality
+
+            let graphicsContext = NSGraphicsContext(cgContext: context, flipped: false)
+            NSGraphicsContext.current = graphicsContext
+
             draw(in: drawRect,
                  from: CGRect(origin: .zero, size: self.size),
                  operation: .copy,
                  fraction: 1.0)
 
-            return resizedImage
+            guard let cgImage = context.makeImage() else { return nil }
+            return NSImage(cgImage: cgImage, size: size)
         }
     }
 }
 #else
 extension PlatformImage {
+
     private func resizeIOS(size: CGSize, drawRect: CGRect, quality: CGInterpolationQuality) -> UIImage? {
-        let renderer = UIGraphicsImageRenderer(size: size)
+        let format = UIGraphicsImageRendererFormat()
+        format.preferredRange = .standard
+
+        let renderer = UIGraphicsImageRenderer(size: size, format: format)
         return renderer.image { context in
             context.cgContext.interpolationQuality = quality
+            context.cgContext.setRenderingIntent(.relativeColorimetric)
             draw(in: drawRect)
         }
     }
